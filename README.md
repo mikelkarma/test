@@ -1,6 +1,6 @@
 # Repositório de Códigos Aleatórios
 
-Este é um repositório onde coloco códigos diversos, criados com o objetivo de **testar ideias**, **experimentar conceitos** e **aprimorar habilidades**. Os scripts aqui podem variar de simples exemplos a projetos mais complexos, dependendo do contexto ou da necessidade.
+Este é um repositório onde coloco códigos diversos, criados com o objetivo de **testar ideias**, **experimentar conceitos** e **aprimorar habilidades**. 
 
 ## Aviso
 
