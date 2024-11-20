@@ -49,12 +49,30 @@ class Server:
                 self.clients.append({"socket": s_socket, "address": s_addr})
                 msg(" + Cliente registrado")
                 s_socket.send("Welcome".encode())
+                threading.Thread(target=self.handle_client, args=(s_socket, s_addr), daemon=True).start()
+       
         except KeyboardInterrupt:
             msg(" + Fechando...")
         except Exception as erro:
             msg(f" - Erro ao registrar o cliente: {erro}")
         finally:
             self.s.close()
+
+    def handle_client(self, s_socket, s_addr):
+        """Receber dados do cliente em segundo plano"""
+        try:
+            while True:
+                data = s_socket.recv(1024)
+                if not data:
+                    break
+                msg(f"Recebido de {s_addr}: {data.decode()}")
+                s_socket.send("200".encode())
+        except Exception as erro:
+            msg(f"Erro ao receber dados de {s_addr}: {erro}")
+        finally:
+            s_socket.close()
+            msg(f"Cliente {s_addr} desconectado.")
+            
 
     def send_client(self, client_index, msg):
         """Envia mensagens para o cliente específico"""
@@ -176,10 +194,11 @@ X_train, X_test, y_train, y_test = train_test_split(textos, tags, test_size=0.25
 modelo = make_pipeline(TfidfVectorizer(), MultinomialNB())
 modelo.fit(X_train, y_train)
 
-# Funções para manipulação das tasks
 task_manager = Task()
 
+servidor = None
 def server_nous():
+    global servidor
     HOST = "0.0.0.0"
     def ports():
         msg("> Porta que o servidor estará rodando: ", end=False)
@@ -196,19 +215,17 @@ def server_nous():
     threading.Thread(target=servidor.accept_clients, daemon=True).start()
 
 def server_nous_listing():
-    if not servidor.clients:
+    if servidor is None or not servidor.clients:
         msg(" > Nenhum cliente conectado")
         return
-    
     table = Table(show_header=True, header_style="bold magenta")
     table.add_column("ID", style="dim")
     table.add_column("Endereço", style="dim")
-    
     for idx, client in enumerate(servidor.clients):
         client_address = client["address"]
         table.add_row(str(idx + 1), str(client_address))
-    
     console.print(table)
+
 
 def task_list():
     task_manager.list_task()
