@@ -3,7 +3,7 @@ import sys
 from time import sleep
 from rich.console import Console
 from rich.table import Table
-from rich.progress import trick
+from rich.progress import track
 
 class Task:
     def __init__(self):
