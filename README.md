@@ -6,8 +6,7 @@ Este é um repositório onde coloco códigos diversos, criados com o objetivo de
 
 Os códigos aqui podem:
 - **Estar incompletos ou conter bugs**.
-- Ser **estritamente experimentais**, sem garantia de funcionamento ideal.
-- Não seguir práticas recomendadas ou padrões de mercado.
+- Ser **estritamente experimentais**, sem garantia que funcionam.
 
 > *"A prática leva à perfeição, mas a experimentação leva à inovação."*
 
