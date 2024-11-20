@@ -1,8 +1,11 @@
 import os
-import sys
+import sys, signal
 from time import sleep
 from rich.console import Console
 from rich.table import Table
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event
+from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn
 
 class Task:
     def __init__(self):
@@ -68,11 +71,6 @@ task_manager = Task()
 # Listar tarefas novamente
 # task_manager.list_task()
 
-import signal
-from concurrent.futures import ThreadPoolExecutor
-from threading import Event
-from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn
-
 class PortScanner:
     def __init__(self, ip: str, ports: range):
         self.ip = ip
@@ -137,7 +135,7 @@ class PortScanner:
             console.print(table)
 
 
-if __name__ == "__main__":
+ if __name__ == "__main__":
     
     target_ip = "localhost"
     start_port = 0
