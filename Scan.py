@@ -138,10 +138,7 @@ class PortScanner:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage:\n\tpython scanner.py <IP> <START_PORT> <END_PORT>")
-        sys.exit(1)
-
+    
     target_ip = "localhost"
     start_port = 0
     end_port = 65535
