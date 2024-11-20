@@ -18,7 +18,7 @@ class NetworkScanner:
         self.scanner = nmap.PortScanner()
 
     def get_local_ip(self):
-        """Obtem o IP local da máquina."""
+        """Obtem o IP local"""
         hostname = socket.gethostname()
         local_ip = socket.gethostbyname(hostname)
         return local_ip
