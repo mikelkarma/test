@@ -125,14 +125,12 @@ def task_remove():
     task_id = input()
     task_manager.remove_task_id(int(task_id))
 
-# Mapeamento de funções
 funcoes = {
     "task_list": task_list,
     "add_task": task_add,
     "rm_task": task_remove
 }
 
-# Exemplo de uso
 while True:
  msg(" > ", end=False)
  text = input()
