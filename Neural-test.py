@@ -1,7 +1,7 @@
 import datetime
 import sys
 import socket
-import threading
+import threading, nmap
 from time import sleep
 from rich.console import Console
 from rich.table import Table
@@ -9,8 +9,47 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
-
 console = Console()
+import ipaddress
+
+class NetworkScanner:
+    def __init__(self):
+        self.console = Console()
+        self.scanner = nmap.PortScanner()
+
+    def get_local_ip(self):
+        """Obtém o IP local da máquina."""
+        hostname = socket.gethostname()
+        local_ip = socket.gethostbyname(hostname)
+        return local_ip
+
+    def get_cidr(self, local_ip):
+        """Gera o CIDR para a rede atual."""
+        network = ipaddress.IPv4Network(f"{local_ip}/24", strict=False)
+        return str(network.network_address) + "/24"
+
+    def scan_network(self, cidr):
+        """Realiza o scan da rede."""
+        self.console.print(f"[bold green]Escaneando a rede:[/bold green] {cidr}")
+        self.scanner.scan(hosts=cidr, arguments="-p- -T4 -A")
+        return self.scanner
+
+    def display_results(self):
+        """Exibe os resultados da varredura."""
+        table = Table(title="Resultados do Scanner de Rede")
+        table.add_column("Host", style="cyan", justify="left")
+        table.add_column("Protocolo", style="magenta", justify="center")
+        table.add_column("Porta", style="green", justify="center")
+        table.add_column("Serviço", style="yellow", justify="center")
+
+        for host in self.scanner.all_hosts():
+            for proto in self.scanner[host].all_protocols():
+                ports = self.scanner[host][proto].keys()
+                for port in ports:
+                    service = self.scanner[host][proto][port]["name"]
+                    table.add_row(host, proto, str(port), service)
+
+        self.console.print(table)
 
 def msg(message, end=True, delay=0.05):
     """Função para mostrar mensagens de forma suave"""
@@ -166,6 +205,17 @@ textos = [
     "listar clients do server 01", 
     "listar clients do server nous", 
     "lists clients nous"
+    "poderia scanear a rede wifi",
+    
+    "scanear rede wifi",
+    "scan wifi",
+    "scanear rede"
+
+    "exibir resultados do scan de rede",
+    "resultados do scan wifi",
+    "resultados do scan 01",
+    "resultados do scanner da rede wifi"
+    
 ]
 
 tags = [
@@ -187,6 +237,15 @@ tags = [
     "server_nous_listing", 
     "server_nous_listing", 
     "server_nous_listing"
+
+    "scan_network",
+    "scan_network",
+    "scan_network",
+
+    "scan_network_results",
+    "scan_network_results",
+    "scan_network_results",
+    "scan_network_results"
 ]
 
 # Treinamento do modelo
@@ -203,6 +262,9 @@ def server_nous():
     def ports():
         msg("> Porta que o servidor estará rodando: ", end=False)
         PORT = int(input())
+        now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        task_manager.add_task(f"Servidor Nous em execução: 0.0.0.0:{PORT}", now, "EXECUÇÃO")
+
     try: 
         ports()
     except Exception as e:        
@@ -227,6 +289,7 @@ def server_nous_listing():
     console.print(table)
 
 
+    
 def task_list():
     task_manager.list_task()
 
@@ -241,26 +304,34 @@ def task_remove():
     task_id = input()
     task_manager.remove_task_id(int(task_id))
 
+def scan_network():
+   now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+   task_manager.add_task("Scanner de rede", now, "EXECUTADO")
+   scanner = NetworkScanner()
+   local_ip = scanner.get_local_ip()
+   cidr = scanner.get_cidr(local_ip)
+   scanner.scan_network(cidr)
+   scanner.display_results()
+
+def scan_network_results():
+   scanner.display_results()
 
 funcoes = {
     "task_list": task_list,
     "add_task": task_add,
     "rm_task": task_remove,
     "nous_s": server_nous,
-    "nous_list": server_nous_listing
+    "nous_list": server_nous_listing,
+    "scan_network": scan_network,
+    "scan_network_results": scan_network_results
 }
+
 
 while True:
     msg(" > ", end=False)
     text = input()
-
-    # Predição do modelo
     previsao = modelo.predict([text])
-
-    # Exibição do comando e execução da função
     print(f'Comando: {text}')
     print(f'Função a ser executada: {previsao[0]}')
-
-    # Executar a função predita
     funcoes[previsao[0]]()
         
