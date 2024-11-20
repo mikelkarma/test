@@ -241,6 +241,7 @@ tags = [
     "scan_network",
     "scan_network",
     "scan_network",
+    "scan_network",
 
     "scan_network_results",
     "scan_network_results",
