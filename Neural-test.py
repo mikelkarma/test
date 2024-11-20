@@ -18,7 +18,7 @@ class NetworkScanner:
         self.scanner = nmap.PortScanner()
 
     def get_local_ip(self):
-        """Obtém o IP local da máquina."""
+        """Obtem o IP local da máquina."""
         hostname = socket.gethostname()
         local_ip = socket.gethostbyname(hostname)
         return local_ip
@@ -81,7 +81,7 @@ class Server:
     def accept_clients(self):
         """Aceita as conexões dos clientes"""
         try:
-            msg("Aguardando conexão de clientes...")
+            msg(" + Aguardando conexão de clientes...")
             while True:
                 s_socket, s_addr = self.s.accept()
                 msg(f" + Cliente conectado: {s_addr}")
@@ -104,13 +104,13 @@ class Server:
                 data = s_socket.recv(1024)
                 if not data:
                     break
-                msg(f"Recebido de {s_addr}: {data.decode()}")
+                msg(f" + Results {s_addr}: {data.decode()}")
                 s_socket.send("200".encode())
         except Exception as erro:
-            msg(f"Erro ao receber dados de {s_addr}: {erro}")
+            msg(f" - Erro ao receber dados de {s_addr}: {erro}")
         finally:
             s_socket.close()
-            msg(f"Cliente {s_addr} desconectado.")
+            msg(f" - Cliente {s_addr} desconectado.")
             
 
     def send_client(self, client_index, msg):
@@ -260,15 +260,15 @@ def server_nous():
     global servidor
     HOST = "0.0.0.0"
     def ports():
-        msg("> Porta que o servidor estará rodando: ", end=False)
+        msg(" > Porta que o servidor estará rodando: ", end=False)
         PORT = int(input())
         now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        task_manager.add_task(f"Servidor Nous em execução: 0.0.0.0:{PORT}", now, "EXECUÇÃO")
+        task_manager.add_task(f" Servidor Nous em execução: 0.0.0.0:{PORT}", now, "EXECUÇÃO")
 
     try: 
         ports()
     except Exception as e:        
-        msg("Por favor insira um número válido entre 0 e 65535")      
+        msg(" > Por favor insira um número válido entre 0 e 65535")      
         ports()
 
     BACKLOG = 5
@@ -278,7 +278,7 @@ def server_nous():
 
 def server_nous_listing():
     if servidor is None or not servidor.clients:
-        msg(" > Nenhum cliente conectado")
+        msg(" - Nenhum cliente conectado")
         return
     table = Table(show_header=True, header_style="bold magenta")
     table.add_column("ID", style="dim")
@@ -294,13 +294,13 @@ def task_list():
     task_manager.list_task()
 
 def task_add():
-    msg("Qual tarefa deseja adicionar?", end=False)
+    msg(" > Qual tarefa deseja adicionar?", end=False)
     task = input()
     now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     task_manager.add_task(task, now, "Pendente")
 
 def task_remove():
-    msg("Qual ID da task deseja remover?", end=False)
+    msg(" > Qual ID da task deseja remover?", end=False)
     task_id = input()
     task_manager.remove_task_id(int(task_id))
 
