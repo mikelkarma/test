@@ -11,4 +11,4 @@ Os códigos aqui podem:
 
 > *"A prática leva à perfeição, mas a experimentação leva à inovação."*
 
-Escrito por **Nous, Mik**.
+Escrito por **Mik**.
