@@ -1,5 +1,7 @@
 import datetime
 import sys
+import socket
+import threading
 from time import sleep
 from rich.console import Console
 from rich.table import Table
@@ -10,16 +12,73 @@ from sklearn.pipeline import make_pipeline
 
 console = Console()
 
+def msg(message, end=True, delay=0.05):
+    """Função para mostrar mensagens de forma suave"""
+    sys.stdout.write(message)
+    sys.stdout.flush()
+    if end:
+        print()
+    sleep(delay)
+
+# CLASSE SERVER
+class Server:
+    def __init__(self, host, port, backlog):
+        self.host = host
+        self.port = port
+        self.backlog = backlog
+        self.clients = []
+
+    def start_server(self):
+        """Inicia o servidor"""
+        try:
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.s.bind((self.host, self.port))
+            self.s.listen(self.backlog)
+            msg(f" + Servidor criado com sucesso {self.host}:{self.port}")
+        except Exception as error:
+            msg(f" - Erro ao criar o servidor: {error}")
+            return
+
+    def accept_clients(self):
+        """Aceita as conexões dos clientes"""
+        try:
+            msg("Aguardando conexão de clientes...")
+            while True:
+                s_socket, s_addr = self.s.accept()
+                msg(f" + Cliente conectado: {s_addr}")
+                self.clients.append({"socket": s_socket, "address": s_addr})
+                msg(" + Cliente registrado")
+                s_socket.send("Welcome".encode())
+        except KeyboardInterrupt:
+            msg(" + Fechando...")
+        except Exception as erro:
+            msg(f" - Erro ao registrar o cliente: {erro}")
+        finally:
+            self.s.close()
+
+    def send_client(self, client_index, msg):
+        """Envia mensagens para o cliente específico"""
+        try:
+            s_socket = self.clients[client_index]["socket"]
+            s_socket.send(msg.encode())
+            msg(" + Mensagem enviada com sucesso")
+        except IndexError:
+            msg(" - Cliente não encontrado")      
+        except Exception as erro:
+            msg(f" - Ocorreu um erro ao enviar a mensagem: {erro}")
+
+
+# CLASSE TASK
 class Task:
     def __init__(self):
         self.ids = []
         self.tasks = []
         self.dates = []
         self.status = []
-        self.counter = 0  # Contador para id
+        self.counter = 0
 
     def add_task(self, task, date, stats):
-        """Adicionando task"""
+        """Adiciona uma nova tarefa"""
         self.counter += 1
         self.ids.append(self.counter)
         self.dates.append(date)
@@ -28,6 +87,7 @@ class Task:
         msg(" > Task adicionada")
 
     def remove_task(self, task):
+        """Remove uma tarefa pelo nome"""
         if task in self.tasks:
             index = self.tasks.index(task)
             self.tasks.pop(index)
@@ -39,6 +99,7 @@ class Task:
             msg(" > Task não encontrada")
     
     def remove_task_id(self, task_id):
+        """Remove uma tarefa pelo ID"""
         if task_id in self.ids:
             index = self.ids.index(task_id)
             self.tasks.pop(index)
@@ -50,6 +111,7 @@ class Task:
             msg(" > Task não encontrada")
     
     def list_task(self):
+        """Lista todas as tarefas"""
         if not self.tasks:
             msg(" > Nenhuma task encontrada")
             return
@@ -65,42 +127,48 @@ class Task:
         
         console.print(table)
 
-def msg(message, end=True, delay=0.05):
-    """Função para mostrar mensagens de forma suave"""
-    for char in message:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        sleep(delay)
-    if end:
-        print()
 
 # Texto para análise de comandos
 textos = [
     "listar tarefas", 
     "listar tasks", 
-    "tarefas",
-    "função 1",
-    "1",
+    "tarefas", 
+    "função 1", 
+    "1", 
     "adicionar tarefa", 
     "adicionar task", 
-    "Tem como adiconar uma tarefa",
+    "Tem como adiconar uma tarefa", 
     "remover tarefa", 
     "tem como remover uma tarefa", 
-    "remover task"
+    "remover task",
+    "iniciar servidor nous", 
+    "start server nous", 
+    "nous server", 
+    "start server 01", 
+    "listar clients do server 01", 
+    "listar clients do server nous", 
+    "lists clients nous"
 ]
 
 tags = [
     "task_list", 
     "task_list", 
     "task_list", 
-    "task_list",
-    "task_list",
+    "task_list", 
+    "task_list", 
     "add_task", 
     "add_task", 
-    "add_task",
+    "add_task", 
     "rm_task", 
     "rm_task", 
-    "rm_task"
+    "rm_task", 
+    "nous_s", 
+    "nous_s", 
+    "nous_s", 
+    "nous_s", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing"
 ]
 
 # Treinamento do modelo
@@ -109,7 +177,38 @@ modelo = make_pipeline(TfidfVectorizer(), MultinomialNB())
 modelo.fit(X_train, y_train)
 
 # Funções para manipulação das tasks
-task_manager = Task()  # Instância global do gerenciador de tarefas
+task_manager = Task()
+
+def server_nous():
+    HOST = "0.0.0.0"
+    def ports():
+        msg("> Porta que o servidor estará rodando: ", end=False)
+        PORT = int(input())
+    try: 
+        ports()
+    except Exception as e:        
+        msg("Por favor insira um número válido entre 0 e 65535")      
+        ports()
+
+    BACKLOG = 5
+    servidor = Server(HOST, PORT, BACKLOG)
+    servidor.start_server()
+    threading.Thread(target=servidor.accept_clients, daemon=True).start()
+
+def server_nous_listing():
+    if not servidor.clients:
+        msg(" > Nenhum cliente conectado")
+        return
+    
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("ID", style="dim")
+    table.add_column("Endereço", style="dim")
+    
+    for idx, client in enumerate(servidor.clients):
+        client_address = client["address"]
+        table.add_row(str(idx + 1), str(client_address))
+    
+    console.print(table)
 
 def task_list():
     task_manager.list_task()
@@ -125,23 +224,26 @@ def task_remove():
     task_id = input()
     task_manager.remove_task_id(int(task_id))
 
+
 funcoes = {
     "task_list": task_list,
     "add_task": task_add,
-    "rm_task": task_remove
+    "rm_task": task_remove,
+    "nous_s": server_nous,
+    "nous_list": server_nous_listing
 }
 
 while True:
- msg(" > ", end=False)
- text = input()
+    msg(" > ", end=False)
+    text = input()
 
- # Predição do modelo
- previsao = modelo.predict([text])  # Corrigido para passar lista
+    # Predição do modelo
+    previsao = modelo.predict([text])
 
- # Exibição do comando e execução da função
- print(f'Comando: {text}')
- print(f'Função a ser executada: {previsao[0]}')
+    # Exibição do comando e execução da função
+    print(f'Comando: {text}')
+    print(f'Função a ser executada: {previsao[0]}')
 
- # Executar a função predita
- funcoes[previsao[0]]()
-            
+    # Executar a função predita
+    funcoes[previsao[0]]()
+        
