@@ -187,7 +187,6 @@ class Task:
 
 # Texto para análise de comandos
 textos = [
-textos = [
     # Comandos para listar tarefas
     "listar tarefas", 
     "mostrar tarefas", 
