@@ -51,7 +51,7 @@ class NetworkScanner:
 
         self.console.print(table)
 
-def msg(message, end=True, delay=0.05):
+def msg(message, end=True, delay=0.2):
     """Função para mostrar mensagens de forma suave"""
     sys.stdout.write(message)
     sys.stdout.flush()
@@ -366,19 +366,8 @@ servidor = None
 def server_nous():
     global servidor
     HOST = "0.0.0.0"
-    
-    try:
-        msg(" > Porta que o servidor estará rodando: ", end=False)
-        PORT = int(input())
-        now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        task_manager.add_task(f" Servidor Nous em execução: 0.0.0.0:{PORT}", now, "EXECUÇÃO")
-        
-    except Exception as e:        
-        msg(" > Por favor insira um número válido entre 0 e 65535")      
-        server_nous()
-
     BACKLOG = 5
-    servidor = Server(HOST, PORT, BACKLOG)
+    servidor = Server(HOST, 4545, BACKLOG)
     servidor.start_server()
     threading.Thread(target=servidor.accept_clients, daemon=True).start()
 
