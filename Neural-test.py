@@ -204,18 +204,15 @@ textos = [
     "start server 01", 
     "listar clients do server 01", 
     "listar clients do server nous", 
-    "lists clients nous"
+    "lists clients nous",
     "poderia scanear a rede wifi",
-    
     "scanear rede wifi",
     "scan wifi",
-    "scanear rede"
-
+    "scanear rede",
     "exibir resultados do scan de rede",
     "resultados do scan wifi",
     "resultados do scan 01",
     "resultados do scanner da rede wifi"
-    
 ]
 
 tags = [
@@ -236,13 +233,11 @@ tags = [
     "nous_s", 
     "server_nous_listing", 
     "server_nous_listing", 
-    "server_nous_listing"
-
+    "server_nous_listing", 
     "scan_network",
     "scan_network",
     "scan_network",
     "scan_network",
-
     "scan_network_results",
     "scan_network_results",
     "scan_network_results",
