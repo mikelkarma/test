@@ -416,7 +416,7 @@ funcoes = {
     "add_task": task_add,
     "rm_task": task_remove,
     "nous_s": server_nous,
-    "nous_list": server_nous_listing,
+    "server_nous_listing": server_nous_listing,
     "scan_network": scan_network,
     "scan_network_results": scan_network_results
 }
