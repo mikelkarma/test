@@ -187,62 +187,174 @@ class Task:
 
 # Texto para análise de comandos
 textos = [
+textos = [
+    # Comandos para listar tarefas
     "listar tarefas", 
+    "mostrar tarefas", 
+    "exibir tarefas", 
+    "ver lista de tarefas", 
+    "quais tarefas estão pendentes", 
     "listar tasks", 
-    "tarefas", 
-    "função 1", 
-    "1", 
+    "quero ver as tarefas", 
+    "lista de tarefas", 
+    "mostrar tasks", 
+    "ver todas as tarefas", 
+
+    # Comandos para adicionar tarefas
     "adicionar tarefa", 
     "adicionar task", 
-    "Tem como adiconar uma tarefa", 
+    "tem como adicionar uma tarefa?", 
+    "inserir nova tarefa", 
+    "criar tarefa", 
+    "gostaria de adicionar uma tarefa", 
+    "adicionar nova task", 
+    "nova tarefa", 
+    "como adicionar uma task?", 
+    "pode adicionar uma tarefa?", 
+
+    # Comandos para remover tarefas
     "remover tarefa", 
-    "tem como remover uma tarefa", 
-    "remover task",
+    "apagar tarefa", 
+    "deletar tarefa", 
+    "tem como remover uma tarefa?", 
+    "quero excluir uma tarefa", 
+    "excluir tarefa", 
+    "remover task", 
+    "apagar task", 
+    "eliminar tarefa", 
+    "deletar task",
+
+    # Comandos para iniciar servidor
     "iniciar servidor nous", 
     "start server nous", 
-    "nous server", 
+    "ligar servidor nous", 
+    "nous server start", 
+    "iniciar servidor 01", 
     "start server 01", 
-    "listar clients do server 01", 
+    "criar servidor", 
+    "subir servidor nous", 
+    "startar servidor", 
+    "iniciar servidor de teste",
+
+    # Comandos para listar clientes conectados ao servidor
+    "listar clientes conectados", 
+    "quais clientes estão conectados", 
+    "exibir clientes conectados", 
     "listar clients do server nous", 
-    "lists clients nous",
-    "poderia scanear a rede wifi",
-    "scanear rede wifi",
-    "scan wifi",
-    "scanear rede",
-    "exibir resultados do scan de rede",
-    "resultados do scan wifi",
-    "resultados do scan 01",
-    "resultados do scanner da rede wifi"
+    "listar clients do server 01", 
+    "listar clientes do servidor", 
+    "quais são os clientes conectados", 
+    "lista de clientes", 
+    "mostrar clientes conectados", 
+    "quais são os clientes do servidor?", 
+
+    # Comandos para escanear redes
+    "scanear rede wifi", 
+    "quero escanear a rede", 
+    "scan wifi", 
+    "analisar rede wifi", 
+    "fazer scan da rede local", 
+    "poderia escanear a rede wifi", 
+    "scanear dispositivos na rede", 
+    "mapear rede", 
+    "fazer scan da rede wifi", 
+    "procurar dispositivos na rede",
+
+    # Comandos para exibir resultados do escaneamento
+    "exibir resultados do scan de rede", 
+    "mostrar resultados do scanner de rede", 
+    "resultados do scanner de rede", 
+    "quais dispositivos foram encontrados na rede", 
+    "mostrar resultados do scan wifi", 
+    "resultados do scanner wifi", 
+    "ver dispositivos escaneados", 
+    "mostrar resultados do scanner", 
+    "resultados do scan 01", 
+    "exibir dispositivos da rede"
 ]
 
 tags = [
+    # Tags relacionadas a tarefas
+    "task_list",  # para listar tarefas
     "task_list", 
     "task_list", 
     "task_list", 
     "task_list", 
     "task_list", 
+    "task_list", 
+    "task_list", 
+    "task_list", 
+    "task_list", 
+
+    "add_task",  # para adicionar tarefas
     "add_task", 
     "add_task", 
     "add_task", 
+    "add_task", 
+    "add_task", 
+    "add_task", 
+    "add_task", 
+    "add_task", 
+    "add_task", 
+
+    "rm_task",  # para remover tarefas
     "rm_task", 
     "rm_task", 
     "rm_task", 
+    "rm_task", 
+    "rm_task", 
+    "rm_task", 
+    "rm_task", 
+    "rm_task", 
+    "rm_task",
+
+    # Tags relacionadas ao servidor
+    "nous_s",  # para iniciar servidor
     "nous_s", 
     "nous_s", 
     "nous_s", 
     "nous_s", 
+    "nous_s", 
+    "nous_s", 
+    "nous_s", 
+    "nous_s", 
+    "nous_s",
+
+    "server_nous_listing",  # para listar clientes conectados
     "server_nous_listing", 
     "server_nous_listing", 
     "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+    "server_nous_listing", 
+
+    # Tags relacionadas ao scanner de redes
+    "scan_network",  # para escanear redes
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
+    "scan_network", 
     "scan_network",
-    "scan_network",
-    "scan_network",
-    "scan_network",
-    "scan_network_results",
-    "scan_network_results",
-    "scan_network_results",
+
+    "scan_network_results",  # para exibir resultados do escaneamento
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
+    "scan_network_results", 
     "scan_network_results"
 ]
+
 
 # Treinamento do modelo
 X_train, X_test, y_train, y_test = train_test_split(textos, tags, test_size=0.25, random_state=42)
