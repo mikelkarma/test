@@ -366,7 +366,9 @@ servidor = None
 def server_nous():
     global servidor
     HOST = "0.0.0.0"
+    PORT = None
     def ports():
+        global PORT
         msg(" > Porta que o servidor estará rodando: ", end=False)
         PORT = int(input())
         now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
