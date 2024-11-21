@@ -375,7 +375,7 @@ def server_nous():
         
     except Exception as e:        
         msg(" > Por favor insira um número válido entre 0 e 65535")      
-        ports()
+        server_nous()
 
     BACKLOG = 5
     servidor = Server(HOST, PORT, BACKLOG)
