@@ -366,16 +366,13 @@ servidor = None
 def server_nous():
     global servidor
     HOST = "0.0.0.0"
-    PORT = None
-    def ports():
-        global PORT
+    
+    try:
         msg(" > Porta que o servidor estará rodando: ", end=False)
         PORT = int(input())
         now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         task_manager.add_task(f" Servidor Nous em execução: 0.0.0.0:{PORT}", now, "EXECUÇÃO")
-
-    try: 
-        ports()
+        
     except Exception as e:        
         msg(" > Por favor insira um número válido entre 0 e 65535")      
         ports()
