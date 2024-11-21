@@ -1,3 +1,4 @@
+# pip install scikit-learn rich python-nmap
 import datetime
 import sys
 import socket
