@@ -65,10 +65,7 @@ if __name__ == "__main__":
     servidor = Server(HOST, PORT, BACKLOG)
     servidor.start_server()
 
-    # Rodando o servidor para aceitar conexões em um thread
     threading.Thread(target=servidor.accept_clients, daemon=True).start()
-
-    # Loop principal para enviar mensagens
     while True:
         try:
             client_id = int(input("Digite o ID do cliente: "))
