@@ -14,7 +14,6 @@ class Task:
         self.status = []
     
     def add_task(self, task, date, stats):
-        """Adicionando task"""
         self.dates.append(date)
         self.status.append(stats)
         self.tasks.append(task)
@@ -48,8 +47,6 @@ class Task:
 
 # Rich start
 console = Console()
-
-# Animação de texto
 def msg(message, delay=0.05):
     for char in message:
         sys.stdout.write(char)
@@ -57,7 +54,6 @@ def msg(message, delay=0.05):
         sleep(delay)
     print()
 
-# Exemplo de uso:
 task_manager = Task()
 
 # Adicionar tarefas
@@ -94,12 +90,11 @@ class PortScanner:
             s.settimeout(1)
             try:
                 result = s.connect_ex((ip, port))
-                return result == 0  # True if port is open
+                return result == 0
             except Exception:
                 return False
 
     def run_scan(self):
-        """Run the port scan and update the progress bar."""
         task_id = self.progress.add_task("scan", ip=self.ip, port="N/A", total=len(self.ports))
 
         with self.progress:
@@ -109,7 +104,6 @@ class PortScanner:
                     pool.submit(self.scan_task, task_id, port)
 
     def scan_task(self, task_id, port):
-        """Scan a single port and log its status."""
         if self.done_event.is_set():
             return
 
