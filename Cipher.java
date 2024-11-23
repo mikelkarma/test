@@ -28,7 +28,7 @@ public class Cipher {
         cipher.init(Cipher.DECRYPT_MODE, rsaPrivateKey);
         byte[] decodedEncryptedAESKey = Base64.getDecoder().decode(encryptedAESKey);
         byte[] decryptedAESKey = cipher.doFinal(decodedEncryptedAESKey);
-        return new SecretKeySpec(decryptedAESKey, "AES");  // Corrigido: Adicionar SecretKeySpec
+        return new SecretKeySpec(decryptedAESKey, "AES");
     }
 
     // Gerando chave AES
