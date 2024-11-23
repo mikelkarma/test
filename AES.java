@@ -37,16 +37,16 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            SecretKey key = generateAESKey(); // Gerando chave
-            String data = "Informações confidenciais";
+            SecretKey key = generateAESKey();
+            String data = "Informacao confidenciais";
             
-            print("> Gerando chave: " + key);
+            print(" > Gerando chave: " + key);
             print(" > Criptografando: " + data);
             String crypt = encrypt(data, key);
             print(" > Resultado criptografado: " + crypt);
 
             print("\n > Descriptografando...");
-            String uncrypt = decrypt(crypt, key); // Passando 'crypt' para descriptografar
+            String uncrypt = decrypt(crypt, key);    
             print(" > Resultado descriptografado: " + uncrypt);
 
         } catch (Exception e) {
