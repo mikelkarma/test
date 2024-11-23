@@ -9,7 +9,7 @@ public class AES {
   public static SecretKey generateAESKey() throws Exception {
     KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
     keyGenerator.init(128);
-    return KeyGenerator.generateKey();
+    return keyGenerator.generateKey();
   }
 
   // Encrypt AES
@@ -31,7 +31,7 @@ public class AES {
   }
   
   // print :)
-  public static void print(String text) throws Exception {
+  public static void print(String text) {
     System.out.println(text);
   }
   
