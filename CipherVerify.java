@@ -5,7 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.util.Base64;
 
-public class Main {
+public class CipherVerify {
 
     // Gerar chave RSA para o cliente
     public static KeyPair generateRSAKey() throws Exception {
