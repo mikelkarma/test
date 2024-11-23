@@ -1,11 +1,11 @@
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;  // Corrigido: Importar SecretKeySpec
+import javax.crypto.spec.SecretKeySpec; 
 import java.security.*;
 import java.util.Base64;
 
-public class Cipher {
+public class Main {
 
     // Gerar chave RSA
     public static KeyPair generateRSAKey() throws Exception {
@@ -55,7 +55,6 @@ public class Cipher {
         return new String(decryptedData);
     }
 
-    // Função para printar na tela
     public static void print(String text) {
         System.out.println(text);
     }
@@ -64,10 +63,10 @@ public class Cipher {
         try {
             // Gerar as chaves RSA
             KeyPair rsaKeyPair = generateRSAKey();
-            PublicKey publicKey = rsaKeyPair.getPublic(); // Chave pública
+            PublicKey publicKey = rsaKeyPair.getPublic(); // Chave publica
             PrivateKey privateKey = rsaKeyPair.getPrivate(); // Chave privada
 
-            // Gerar chave AES e criptografar os dados
+            // Gerar chave AES 
             SecretKey keyAES = generateAESKey();
             String data = "Informação confidenciais";
             print(" > Gerando chave: " + Base64.getEncoder().encodeToString(keyAES.getEncoded()));
@@ -75,17 +74,17 @@ public class Cipher {
             String crypt = encryptAES(data, keyAES);
             print(" > Resultado criptografado: " + crypt);
 
-            // Criptografando a chave AES com a chave pública RSA
+            // Criptografando a chave AES com a chave public
             String keyenc = encryptRSA(keyAES, publicKey);
-            print("Chave AES criptografada com RSA: " + keyenc);
+            print(" > Chave AES criptografada com RSA: " + keyenc);
 
-            // Descriptografar a chave AES com a chave privada RSA
+            // Descriptografar a chave AES com a chave privada 
             SecretKey decryptedAESKey = decryptRSA(keyenc, privateKey);
-            print("Chave AES descriptografada com RSA: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
+            print("\n > Chave AES descriptografada com RSA: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
             
             // Descriptografar os dados com a chave AES
-            print("\n > Descriptografando...");
-            String uncrypt = decryptAES(crypt, decryptedAESKey); // Corrigido: Usar 'decryptedAESKey' ao invés de 'key'
+            print(" > chave AES Descriptografando criptografia");
+            String uncrypt = decryptAES(crypt, decryptedAESKey);
             print(" > Resultado descriptografado: " + uncrypt);
 
         } catch (Exception e) {
