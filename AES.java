@@ -40,15 +40,15 @@ public class AES {
 
     // Criptogrando com  a key gerada
     String data = "Informações confidencial";
-    print("> GenerateKEY: ", key);
-    print(" > Criptografando:", data);
-    String crypt = encrypt(data, key);
-    print(" > Result:", crypt);
+    print("> GenerateKEY: " + key);
+    print(" > Criptografando: " + data);
+    String crypt = encrypt(data + key);
+    print(" > Result: " + crypt);
 
     // descriptografando
     print("\n > Decrypting...");
     String uncrypt = decrypt(crypt, key);
-    print(" > Result:", uncrypt);
+    print(" > Result: " + uncrypt);
     
   }
   
