@@ -99,22 +99,22 @@ public class Main {
 
             // Criptografar a chave AES com a chave pública do Cliente Master
             String encryptedAESKey = encryptRSA(keyAES, publicKeyMaster);
-            print("Chave AES criptografada com RSA (pelo Cliente Master): " + encryptedAESKey);
+            print(" > Chave AES criptografada com RSA (pelo Public Master): " + encryptedAESKey);
 
             // Assinar a mensagem criptografada com a chave privada do Cliente
             String signedMessage = signData(crypt.getBytes(), privateKeyClient);
-            print("Assinatura digital da mensagem: " + signedMessage);
+            print(" > Assinatura digital da mensagem: " + signedMessage);
 
             // Descriptografar a chave AES no Cliente Master
             SecretKey decryptedAESKey = decryptRSA(encryptedAESKey, privateKeyMaster);
-            print("Chave AES descriptografada com a chave privada do Cliente Master: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
+            print(" > Chave AES descriptografada com a chave privada do Cliente Master: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
 
             // Verificar a assinatura da mensagem
             boolean isSignatureValid = verifySignature(crypt.getBytes(), signedMessage, publicKeyClient);
-            print(" > Verificando assinatura: " + isSignatureValid);
+            print(" > Verificando assinatura do cliente: " + isSignatureValid);
 
             // Descriptografar a mensagem com a chave AES no Cliente Master
-            print("\n > Descriptografando mensagem...");
+            print(" > Descriptografando mensagem...");
             String uncrypt = decryptAES(crypt, decryptedAESKey); 
             print(" > Resultado descriptografado: " + uncrypt);
 
