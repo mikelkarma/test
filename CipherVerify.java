@@ -5,7 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.util.Base64;
 
-public class CipherVerify {
+public class Main {
 
     // Gerar chave RSA para o cliente
     public static KeyPair generateRSAKey() throws Exception {
@@ -104,11 +104,14 @@ public class CipherVerify {
             // Assinar a mensagem criptografada com a chave privada do Cliente
             String signedMessage = signData(crypt.getBytes(), privateKeyClient);
             print(" > Assinatura digital da mensagem: " + signedMessage);
+            print("");
+            print(" > Crypted!");
+            print(" > Chave Aes(Rsa): " + encryptedAESKey);
+            print(" > Mensagem: " + crypt);
+            print(" > Assinatura: " + signedMessage);
+            print("");
 
-            print("Chave Aes(Rsa): " + encryptedAESKey);
-            print("Mensagem: " + crypt);
-            print("Assinatura: " + signedMessage);
-
+            print(" > Decrypting...");
             // Descriptografar a chave AES no Cliente Master
             SecretKey decryptedAESKey = decryptRSA(encryptedAESKey, privateKeyMaster);
             print(" > Chave AES descriptografada com a chave privada do Cliente Master: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
@@ -120,7 +123,7 @@ public class CipherVerify {
             // Descriptografar a mensagem com a chave AES no Cliente Master
             print(" > Descriptografando mensagem...");
             String uncrypt = decryptAES(crypt, decryptedAESKey); 
-            print(" > Resultado descriptografado: " + uncrypt);
+            print(" > Decrypted: " + uncrypt);
 
         } catch (Exception e) {
             e.printStackTrace();
