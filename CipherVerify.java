@@ -105,6 +105,10 @@ public class CipherVerify {
             String signedMessage = signData(crypt.getBytes(), privateKeyClient);
             print(" > Assinatura digital da mensagem: " + signedMessage);
 
+            print("Chave Aes(Rsa): " + encryptedAESKey);
+            print("Mensagem: " + crypt);
+            print("Assinatura: " + signedMessage);
+
             // Descriptografar a chave AES no Cliente Master
             SecretKey decryptedAESKey = decryptRSA(encryptedAESKey, privateKeyMaster);
             print(" > Chave AES descriptografada com a chave privada do Cliente Master: " + Base64.getEncoder().encodeToString(decryptedAESKey.getEncoded()));
