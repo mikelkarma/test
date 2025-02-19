@@ -4,10 +4,10 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT 8080
+#define PORT 36898
 #define BUFFER_SIZE 1024
-#define USERNAME "admin"
-#define PASSWORD "nous_shell"
+#define USERNAME "nous"
+#define PASSWORD "trsl888"
 
 void send_message(int socket, const char *message);
 void receive_message(int socket, char *buffer, size_t buffer_size);
